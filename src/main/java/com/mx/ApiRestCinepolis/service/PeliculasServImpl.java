@@ -47,7 +47,7 @@ public class PeliculasServImpl {
 		return pelisEncontrar;
 		
 	}
-	//EDITARXID
+	//EDITAR_X_ID
 	@Transactional
 	public boolean editarXid(Peliculas peliculas) {
 		
@@ -61,4 +61,41 @@ public class PeliculasServImpl {
 		}
 		return bandera;
 	}
+	
+	//ELIMINAR_X_ID
+	@Transactional()
+	public boolean eliminarXid(Integer idPeli) {
+		boolean bandera = false;
+		Peliculas peliculasEncontradas = peliculasDao.findById(idPeli).orElse(null);
+		if(peliculasEncontradas != null) {
+			peliculasDao.deleteById(idPeli);
+			bandera = true;
+		}
+		
+		return bandera;
+	}
+	//BUSCAR X NOMBRE
+	@Transactional(readOnly = true)
+	public Peliculas buscarXnombre(String nombre) {
+		return peliculasDao.findByNombre(nombre);
+	}
+	//BUSCAR X GEERO CON QUERY NATIVA DAO
+	@Transactional(readOnly = true)
+	public List<Peliculas> buscarXGenero(String genero){
+		return peliculasDao.buscarXGenero(genero);
+	}
+	
+	//ELIMINAR X NOMBRE
+	@Transactional()
+	public boolean eliminarXnombre(String nombreP) {
+		boolean bandera = false;
+		Peliculas pelis = peliculasDao.findByNombre(nombreP);
+		if(pelis !=null) {
+		//if(pelis.getNombre().equals(nombreP)) {
+			peliculasDao.deleteByNombre(nombreP);
+			bandera = true;
+		}
+		return bandera;
+	}
+	
 }
